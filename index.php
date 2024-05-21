@@ -38,26 +38,6 @@ $hotels = [
     ],
 
 ];
-
-for ($i = 0; $i < count($hotels); $i++) {
-    $cur_hotel = $hotels[$i]; // array associativo
-    $name = $cur_hotel["name"];
-    $desc = $cur_hotel["description"];
-    $parking = $cur_hotel["parking"];
-    $vote = $cur_hotel["vote"];
-    $distance = $cur_hotel["distance_to_center"];
-
-    echo "<p>hotel num {$i} è {$name}</p>";
-    echo "<p>Descrizione {$desc}</p>";
-    if ($parking === true) {
-        echo "<p>Pacheggio disponibile</p>";
-    } else {
-        echo "<p>Pacheggio NON disponibile</p>";
-    }
-    echo "<p>distance {$distance}</p>";
-}
-
-$i = 0;
 ?>
 
 <!DOCTYPE html>
@@ -73,35 +53,44 @@ $i = 0;
 </head>
 
 <body>
-    <table class="table mt-2">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
-        </tbody>
-    </table>
+    <div>
+        <table class="table">
+            <thead>
+                <?php foreach ($hotels[0] as $key => $value) { ?>
+                    <?php echo "<th scope='col'>" ?>
+                    <?php echo $key ?>
+                    <?php echo "</th>" ?>
+                <?php } ?>
+            </thead>
+            <tbody>
+
+                <?php foreach ($hotels as $cur_hotel) { ?>
+                    <?php echo "<tr>" ?>
+                    <?php foreach ($cur_hotel as $key => $value) { ?>
+                        <?php echo "<td>" ?>
+                        <?php
+                        if ($key === "parking") {
+                            if ($value === true) {
+                                $value = "Parcheggio disponibile";
+                            } elseif ($value === false) {
+                                $value = "Parcheggio non disponibile";
+                            }
+                            echo $value;
+                        } elseif ($key === "distance_to_center") {
+                            $value = "{$value} km";
+                            echo $value;
+                        } else {
+                            echo $value;
+                        }
+                        ?>
+                        <?php echo "</td>" ?>
+                    <?php } ?>
+                    <?php echo "</tr>" ?>
+                <?php } ?>
+
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>
